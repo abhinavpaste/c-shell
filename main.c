@@ -3,26 +3,12 @@
 #include<string.h>
 #include<unistd.h>
 #include<sys/wait.h>
+#include "builtin.h"
 #include "signal_handler.h"
 
 #define MAX_IP 1024
+#define MAX_ARGS  64
 
-int handle_builtin(char **args) {
-    if (strcmp(args[0], "exit") == 0) {
-        exit(0);
-    }
-    if (strcmp(args[0], "cd") == 0) {
-        if (args[1] == NULL) {
-            chdir(getenv("HOME"));
-        } else {
-            if (chdir(args[1]) != 0) {
-                perror(args[1]);
-            }
-        }
-        return 1;
-    }
-    return 0;
-}
 
 int main(){
     char input[MAX_IP];
@@ -60,7 +46,8 @@ int main(){
             perror("fork failed");
             continue;
         }
-
+        
+       
         if (pid == 0) {
             //for child
             reset_child_signals();
