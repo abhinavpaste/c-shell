@@ -3,8 +3,26 @@
 #include<string.h>
 #include<unistd.h>
 #include<sys/wait.h>
+#include "signal_handler.h"
 
 #define MAX_IP 1024
+
+int handle_builtin(char **args) {
+    if (strcmp(args[0], "exit") == 0) {
+        exit(0);
+    }
+    if (strcmp(args[0], "cd") == 0) {
+        if (args[1] == NULL) {
+            chdir(getenv("HOME"));
+        } else {
+            if (chdir(args[1]) != 0) {
+                perror(args[1]);
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
 
 int main(){
     char input[MAX_IP];
@@ -14,6 +32,8 @@ int main(){
     
     //so what the while loop does is, it loops infinetly seeking input from the user , the starting if statements before
     //fork() are repsonsible for parsing the input string or the command the user enters
+
+    setup_signals();
     while(1){
         printf("abhi-sh> ");
         fflush(stdout);
@@ -22,7 +42,7 @@ int main(){
             printf("\n");
             exit(0); 
         }
-        input[strcspn(input, "\n")] = 0;
+        input[strcspn(input, "\r\n")] = 0;
 
         if (strlen(input) == 0) continue;
 
@@ -32,7 +52,7 @@ int main(){
             i++;
             args[i] = strtok(NULL, " ");
         }
-
+         if (handle_builtin(args)) continue;
         //child process begins here
 
         pid = fork();
@@ -43,6 +63,7 @@ int main(){
 
         if (pid == 0) {
             //for child
+            reset_child_signals();
             if (execvp(args[0], args) == -1) {
                 perror(args[0]);
                 exit(1);
