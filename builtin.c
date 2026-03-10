@@ -8,7 +8,7 @@
 
 int handle_builtin(char **args) {
 
-    // created this to specificall handle exit and cd as it was not working , ive explained the detail in the readmen file.
+    // created this to specifically handle exit and cd as it was not working , ive explained the detail in the readme file.
     if (strcmp(args[0], "exit") == 0) {
         exit(0);
     }

@@ -21,7 +21,7 @@ int main(){
 
     setup_signals();
     while(1){
-        printf("abhi-sh> ");
+        printf("navsh> ");
         fflush(stdout);
 
         if(fgets(input,MAX_IP,stdin)==NULL){
@@ -38,7 +38,7 @@ int main(){
             i++;
             args[i] = strtok(NULL, " ");
         }
-         if (handle_builtin(args)) continue;
+        if (handle_builtin(args)) continue;
         //child process begins here
 
         pid = fork();

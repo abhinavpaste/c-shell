@@ -1,5 +1,5 @@
 	CC = gcc
-TARGET = mysh
+TARGET = navsh
 SRCS = main.c signal_handler.c builtin.c
 OBJS = $(SRCS:.c=.o)
 
