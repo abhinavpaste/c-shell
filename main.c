@@ -13,15 +13,20 @@
 int main(){
     char input[MAX_IP];
     char *args[MAX_IP];
+    char cwd[1024];
     pid_t pid;
     int status;
+    char *dir;
     
     //so what the while loop does is, it loops infinetly seeking input from the user , the starting if statements before
     //fork() are repsonsible for parsing the input string or the command the user enters
 
     setup_signals();
     while(1){
-        printf("navsh> ");
+        getcwd(cwd, sizeof(cwd));
+        dir = strrchr(cwd, '/');   // find last '/' in path
+        dir++;                      // move past the '/'
+        printf("navsh:%s> ", dir);
         fflush(stdout);
 
         if(fgets(input,MAX_IP,stdin)==NULL){
