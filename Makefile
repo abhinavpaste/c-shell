@@ -1,6 +1,6 @@
 	CC = gcc
 TARGET = navsh
-SRCS = main.c signal_handler.c builtin.c
+SRCS = main.c signal_handler.c builtin.c pipe.c
 OBJS = $(SRCS:.c=.o)
 
 $(TARGET): $(OBJS)
