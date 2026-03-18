@@ -130,7 +130,7 @@ sudo apt install build-essential    # gcc and make
 ## Installation
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/navsh.git
+git clone https://github.com/abhinavpaste/navsh.git
 
 # Enter the project directory
 cd navsh
